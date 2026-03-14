@@ -1,0 +1,2 @@
+
+    //npx nodemon --watch ./src --exec npx tsx ./src/blockchain.ts -e -ts
