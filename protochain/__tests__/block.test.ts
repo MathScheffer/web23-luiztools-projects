@@ -2,18 +2,57 @@ import Block from "../src/lib/block";
 import {describe, expect, test} from "@jest/globals";
 
 describe("Block", () => {
+    let genesis: Block;
+
+    beforeAll(() => {
+        genesis = new Block(0, "", "Genesis block")
+    })
     test("should create valid", () => {
-        const block = new Block(1, "hash previo","data");
-        expect(block.isValid()).toBeTruthy();
+        const block = new Block(1, genesis.hash,"data");
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeTruthy();
     })
 
     test("should not create invalid with -1", () => {
-        const block = new Block(-1, "hash previo","data");
-        expect(block.isValid()).toBeFalsy();
+        const block = new Block(-1, genesis.hash,"data");
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
+    })
+    test("should not create invalid without previous hash", () => {
+        const block = new Block(1, "","data");
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
+    })
+        test("should not create invalid with diff previous hash", () => {
+        const block = new Block(1, "previous hash diferente da blockchain","data");
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
+    })
+    test("should not create invalid with diff previous index - current index = 2", () => {
+            // para isto, previsamos colocar o index do bloco diferente do esperado: se for o segundo, não poderá ser 1 para o teste dar certo
+        const block = new Block(2, genesis.hash,"data");
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
+    })
+   test("should not create invalid with diff previous index - current index = 0", () => {
+            // para isto, previsamos colocar o index do bloco diferente do esperado: se for o segundo, não poderá ser 1 para o teste dar certo
+        const block = new Block(0, genesis.hash,"data");
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
+    })
+    test("should not create invalid without data", () => {
+        const block = new Block(1, genesis.hash,"");
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
+    })
+    test("should not create invalid without hash", () => {
+        const block = new Block(1, genesis.hash,"data");
+        block.hash = "";
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
+    })
+    test("should not create invalid with timestamp -1", () => {
+        const block = new Block(1, genesis.hash,"data");
+        block.timestamp = -1;
+        block.hash = block.getHash();
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
     })
 
-/*     test("should not create invalid without hash", () => {
-        const block = new Block(1, "");
-        expect(block.isValid()).toBeFalsy();
-    }) */
+    test("Adultered block should be invalid", () => {
+        const block = new Block(1, genesis.hash,"data");
+        block.data = "teste ihu";
+        expect(block.isValid(genesis.hash, genesis.index).success).toBeFalsy();
+    })
 });
