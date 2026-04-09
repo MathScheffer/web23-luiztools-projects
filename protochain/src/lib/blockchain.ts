@@ -21,6 +21,10 @@ export default class Blockchain {
         return new Validation(true);
     }
 
+    getBlock(hash: string): Block | undefined{
+        return this.blocks.find(b => b.getHash() === hash);
+    }
+
     getLasBlock(): Block{
         const currentBlocksLength: number = this.blocks.length
         return this.blocks[currentBlocksLength - 1]!

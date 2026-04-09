@@ -68,4 +68,10 @@ describe("Blockchain", () => {
         blockchain.blocks[1].data = "a transfere 2 para b";
         expect(blockchain.isValid().success).toEqual(false)
     })
+
+    test("Should get block", () => {
+        const blockchain = new Blockchain();
+        expect(blockchain.getBlock('0')?.index).toBe(1)
+    })
+
 })
