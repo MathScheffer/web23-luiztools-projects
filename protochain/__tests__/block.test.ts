@@ -1,5 +1,5 @@
 import Block from "../src/lib/block";
-import {describe, expect, test} from "@jest/globals";
+import {beforeAll, describe, expect, test} from "@jest/globals";
 
 describe("Block", () => {
     let genesis: Block;

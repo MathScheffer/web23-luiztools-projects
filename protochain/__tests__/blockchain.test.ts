@@ -1,11 +1,13 @@
 import Block from "../src/lib/block";
 import Blockchain from "../src/lib/blockchain";
-import {describe, expect, test} from "@jest/globals";
+import {beforeAll, describe, expect, jest, test} from "@jest/globals";
+
+//jest.mock('"../src/lib/__mocks__/Block"')
 
 describe("Blockchain", () => {
     var blockchain: Blockchain;
 
-    beforeEach(() =>{
+    beforeAll(() =>{
         blockchain = new Blockchain();
     })
 
@@ -71,7 +73,8 @@ describe("Blockchain", () => {
 
     test("Should get block", () => {
         const blockchain = new Blockchain();
-        expect(blockchain.getBlock('0')?.index).toBe(1)
+        const hash = blockchain.getLasBlock().getHash();
+        expect(blockchain.getBlock(hash)?.index).toBe(0)
     })
 
 })
