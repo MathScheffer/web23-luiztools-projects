@@ -7,20 +7,44 @@ export default class Block {
     hash: string ;
     previousHash: string;
     data: string;
+    nonce: number;
+//hash do minerador
+    miner: string;
 
-    constructor(index: number, previousHash: string, data: string) {
+    constructor(index: number, previousHash: string, data: string, nonce?: number, miner?: string) {
         this.index = index;
         this.timestamp = Date.now();
         this.previousHash = previousHash;
         this.data = data;
         this.hash = this.getHash();
+        this.nonce = nonce || 0;
+        this.miner = miner || "";
     }
 
     getHash(): string {
-        return sha256(this.index + this.data + this.timestamp + this.previousHash).toString()
+        return sha256(this.index + this.data + this.timestamp + this.previousHash + this.nonce + this.miner).toString()
     }
 
-    isValid(blockchainPreviousHash: string, previousIndex: number): Validation {
+    /**
+     * Generate a valid hash for the block
+     * @param difficult 
+     * @param miner 
+     */
+    mine(difficult: number, miner: string): void{
+            this.miner = miner;
+
+            const prefix = new Array(difficult + 1).join("0");
+
+            do {
+                this.nonce++;
+
+                this.hash = this.getHash();
+            } while(!this.hash.startsWith(prefix))
+
+    }
+
+
+    isValid(blockchainPreviousHash: string, previousIndex: number, difficult: number): Validation {
         if (this.index < 0) return new Validation(false, "invalid index");
         if (!this.previousHash) return new Validation(false, "none previous hash");
         if (this.previousHash !== blockchainPreviousHash)  return new Validation(false, "invalid previous hash");
@@ -32,7 +56,15 @@ export default class Block {
         Se for adulterado o bloco, getHash() retornará um hash diferente do atual.
         */
         if(this.hash !== this.getHash())  return new Validation(false, "adulterated block error");
-        if(this.timestamp < 1)  return new Validation(false, "invalid timestamp");        
+
+        //Configura o prefixo, ou seja: quantos zeros À esquerda os hashs da blockchain deverão ter
+        const prefix = new Array(difficult + 1).join("0");
+        if(!this.hash.startsWith(prefix)) return new Validation(false, "Mined incorrectly or not mined.");
+
+        if(this.timestamp < 1)  return new Validation(false, "invalid timestamp"); 
+        
+        
+
         return new Validation();
     }
 }

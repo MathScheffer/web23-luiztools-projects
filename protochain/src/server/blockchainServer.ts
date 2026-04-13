@@ -40,7 +40,7 @@ app.get('/block/:indexOrHash', (req, res, next) => {
 app.post('/block', (req,res,next) => {
     const body = req.body;
 
-    if(!body){
+    if(!body || Object.keys(body).length === 0){
         return res.status(422).json({"erro": "corpo da requisição não pode ser vazio"})
     }
 

@@ -4,16 +4,22 @@ import Validation from "./validation";
 export default class Blockchain {
     blocks: Block[];
     nextIndex: number = 0;
+    static readonly DIFFICULT = 5;
 
     constructor() {
         this.blocks = [new Block(this.nextIndex, "", "Genesis Block")];
         this.nextIndex++;
     }
 
+    getDifficult(): number {
+        return Math.ceil( this.blocks.length / Blockchain.DIFFICULT )
+    }
+
     addBlock(block: Block): Validation {
         const lastBlock = this.getLasBlock();
-      
-       if (!(block.isValid(lastBlock.getHash(), lastBlock.index).success)) return block.isValid(lastBlock.getHash(), lastBlock.index);
+        const currentDifficult = this.getDifficult();
+
+       if (!(block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult).success)) return block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult);
 
         this.blocks.push(block);
         this.nextIndex++;
