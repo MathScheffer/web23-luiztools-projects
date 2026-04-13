@@ -41,4 +41,23 @@ describe('Blockchain Server tests', () => {
         expect(response.status).toEqual(201);
         expect(response.body.index).toEqual(1)
     })
+
+    test('POST /block - should return 422 if body was null', async() => {
+        console.log(block)
+        const response = await request(app).post('/block/').send({})
+
+        expect(response.status).toEqual(422);
+    })
+
+    test('POST /block - should return 422 if block was invalid', async() => {
+        console.log(block)
+        const response = await request(app).post('/block/').send({
+            index: -1,
+            previous_hash: "abc",
+            data: "OVO LOBKCASDFADF"
+        })
+
+        expect(response.status).toEqual(422);
+        expect(response.body.message).toEqual("invalid  mock block");
+    })
 })
