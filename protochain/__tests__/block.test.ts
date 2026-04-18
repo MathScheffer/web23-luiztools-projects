@@ -77,6 +77,4 @@ describe("Block", () => {
         block.data = "teste ihu";
         expect(block.isValid(genesis.hash, genesis.index, exampleDificult).success).toBeFalsy();
     })
-
-
 });

@@ -1,5 +1,6 @@
 import Block from "./block";
 import Validation from "../validation";
+import BlockInfo from "../blockInfo";
 
 export default class Blockchain {
     blocks: Block[];
@@ -31,4 +32,20 @@ export default class Blockchain {
     isValid(): Validation{
         return new Validation(true);
     }
-}
+
+        getFeePerTx() : number {
+            return 1; // da menor unidade da blockchain. Ex.: 1 satoshi, 1 wuei (etherum)
+        }
+    
+        getNextBlockInfo() : BlockInfo {
+    
+            return {
+                 data: new Date().toString(),
+                 difficult: 0,
+                 previousHash: this.getLasBlock().hash,
+                 index: 1,
+                 feePerTx: this.getFeePerTx(),
+                 maxDifficult: 62
+            } as BlockInfo
+        }
+};

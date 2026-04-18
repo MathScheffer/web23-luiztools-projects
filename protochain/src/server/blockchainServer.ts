@@ -22,6 +22,11 @@ app.get('/status', (req, res, next) => {
     })
 })
 
+app.get('/block/next', (req, res, next) => {
+    res.json(blockchain.getNextBlockInfo())
+
+});
+
 app.get('/block/:indexOrHash', (req, res, next) => {
     const query = req.params.indexOrHash;
     let block;

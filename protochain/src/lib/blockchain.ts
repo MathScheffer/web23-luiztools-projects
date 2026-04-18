@@ -1,10 +1,12 @@
 import Block from "./block";
 import Validation from "./validation";
+import BlockInfo from "./blockInfo";
 
 export default class Blockchain {
     blocks: Block[];
     nextIndex: number = 0;
     static readonly DIFFICULT = 5;
+    static readonly MAX_DIFFICULT = 62; //tamanho do hash é 64. Se for 64 zeros, não teria dados para armazenar
 
     constructor() {
         this.blocks = [new Block(this.nextIndex, "", "Genesis Block")];
@@ -47,5 +49,27 @@ export default class Blockchain {
         }
         
         return new Validation(true);
+    }
+
+    getFeePerTx() : number {
+        return 1; // da menor unidade da blockchain. Ex.: 1 satoshi, 1 wuei (etherum)
+    }
+
+    getNextBlockInfo() : BlockInfo {
+        const data = new Date().toString();
+        const difficult = this.getDifficult();
+        const previousHash = this.getLasBlock().hash;
+        const index = this.blocks.length;
+        const feePerTx = this.getFeePerTx();
+        const maxDifficult = Blockchain.MAX_DIFFICULT
+
+        return {
+             data,
+             difficult,
+             previousHash,
+             index,
+             feePerTx,
+             maxDifficult
+        } as BlockInfo
     }
 }
