@@ -41,11 +41,11 @@ app.post('/block', (req,res,next) => {
     const body = req.body;
 
     if(!body || Object.keys(body).length === 0){
-        return res.status(422).json({"erro": "corpo da requisição não pode ser vazio"})
+        return res.status(422).json({"message": "corpo da requisição não pode ser vazio"})
     }
 
     if (typeof body.data != 'string' || typeof body.previousHash != 'string' ) {
-        return res.status(422).json({"erro": "corpo da requisição está incompleto ou contém campos inválidos"})
+        return res.status(422).json({"message": "corpo da requisição está incompleto ou contém campos inválidos"})
     }
 
     const newBlock = new Block(body.index ?? blockchain.nextIndex, body.previousHash, body.data);

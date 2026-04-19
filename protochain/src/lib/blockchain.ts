@@ -1,10 +1,12 @@
 import Block from "./block";
+import BlockInfo from "./blockInfo";
 import Validation from "./validation";
 
 export default class Blockchain {
     blocks: Block[];
     nextIndex: number = 0;
     static readonly DIFFICULT = 5;
+    static readonly MAX_DIFFICULT = 63; //SE FOR 64 zeros, não há informações no bloco
 
     constructor() {
         this.blocks = [new Block(this.nextIndex, "", "Genesis Block")];
@@ -52,5 +54,23 @@ export default class Blockchain {
         }
         
         return new Validation(true);
+    }
+
+    //
+    getFeePerTx(): number {
+        return 1;
+    }
+    
+    getNextBlockInfo() : BlockInfo {
+        const index = this.blocks.length;
+        const previousHash = this.getLasBlock().hash;
+        const difficult = this.getDifficult();
+        const maxDifficult = Blockchain.MAX_DIFFICULT;
+        const feePerTx = this.getFeePerTx();
+        const data = new Date().toString();
+        
+        return {
+            index, previousHash, difficult, maxDifficult, feePerTx, data
+        } as BlockInfo
     }
 }

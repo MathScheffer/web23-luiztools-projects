@@ -34,7 +34,7 @@ describe('Blockchain Server tests', () => {
         console.log(block)
         const response = await request(app).post('/block/').send({
             index: 1,
-            previous_hash: "abc",
+            previousHash: "abc",
             data: "OVO LOBKCASDFADF"
         })
 
@@ -53,11 +53,23 @@ describe('Blockchain Server tests', () => {
         console.log(block)
         const response = await request(app).post('/block/').send({
             index: -1,
-            previous_hash: "abc",
+            previousHash: "abc",
             data: "OVO LOBKCASDFADF"
         })
 
         expect(response.status).toEqual(422);
         expect(response.body.message).toEqual("invalid  mock block");
+    })
+
+    test('POST /block - Should return 422 if block doesnt have previous hash as a string', async() => {
+        const response = await request(app).post('/block/').send({
+            index: -1,
+            previousHash: 321,
+            data: "OVO LOBKCASDFADF"
+        })
+
+        
+        expect(response.status).toEqual(422);
+        expect(response.body.message).toEqual("corpo da requisição está incompleto ou contém campos inválidos");
     })
 })

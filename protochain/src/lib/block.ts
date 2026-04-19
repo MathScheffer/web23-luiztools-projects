@@ -16,10 +16,9 @@ export default class Block {
         this.timestamp = Date.now();
         this.previousHash = previousHash;
         this.data = data;
-                this.nonce = nonce || 0;
+        this.nonce = nonce || 0;
         this.miner = miner || "";
         this.hash = this.getHash();
-
     }
 
     getHash(): string {
