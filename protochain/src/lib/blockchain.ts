@@ -49,18 +49,18 @@ export default class Blockchain {
             const currentBlock = this.blocks[i]!;
             const previousBlock = this.blocks[i-1]!;
             
-            const validation = currentBlock.isValid(previousBlock.getHash(), previousBlock.index);
+            const validation = currentBlock.isValid(previousBlock.getHash(), previousBlock.index, this.getDifficult());
             if (!validation.success) return new Validation(false, `Validation failed: ${validation}`);
         }
         
         return new Validation(true);
     }
 
-    //
+    //unidade mínima da moeda. ex.: satoshi, uei, etc
     getFeePerTx(): number {
         return 1;
     }
-    
+
     getNextBlockInfo() : BlockInfo {
         const index = this.blocks.length;
         const previousHash = this.getLasBlock().hash;
