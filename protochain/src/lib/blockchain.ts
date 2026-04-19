@@ -19,6 +19,11 @@ export default class Blockchain {
         const lastBlock = this.getLasBlock();
         const currentDifficult = this.getDifficult();
 
+/*         console.log("Blockchain last block:")
+        console.log(lastBlock)
+        console.log("Genesis .getHash(): ")
+        console.log(lastBlock.getHash())
+        console.log(lastBlock.getHash()) */
        if (!(block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult).success)) return block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult);
 
         this.blocks.push(block);

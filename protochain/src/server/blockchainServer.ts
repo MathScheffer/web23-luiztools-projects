@@ -44,11 +44,18 @@ app.post('/block', (req,res,next) => {
         return res.status(422).json({"erro": "corpo da requisição não pode ser vazio"})
     }
 
-    if (typeof body.data !== 'string' || typeof body.previous_hash !== 'string') {
+    if (typeof body.data != 'string' || typeof body.previousHash != 'string' ) {
         return res.status(422).json({"erro": "corpo da requisição está incompleto ou contém campos inválidos"})
     }
 
-    const newBlock = new Block(body.index ?? blockchain.nextIndex, body.previous_hash, body.data);
+    const newBlock = new Block(body.index ?? blockchain.nextIndex, body.previousHash, body.data);
+
+    /**
+     * Bloco deve ser minerado antes de ser adicionado. 
+     * 
+     *     newBlock.mine(blockchain.getDifficult(), 'uga gua');
+     */
+
 
     const addValidation = blockchain.addBlock(newBlock);
 
@@ -62,6 +69,8 @@ app.post('/block', (req,res,next) => {
 if(process.argv.includes("--run"))
     app.listen(PORT, () => {
         console.log(`Rodando na porta ${PORT}`)
+        console.log('genesis:')
+        console.log(blockchain.getLasBlock())
     })
 
 export{
