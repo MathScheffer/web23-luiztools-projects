@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.59% </span>
+                <span class="strong">95.18% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>70/74</span>
+                <span class='fraction'>79/83</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.28% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/14</span>
+                <span class='fraction'>10/14</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.59% </span>
+                <span class="strong">95.18% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>70/74</span>
+                <span class='fraction'>79/83</span>
             </div>
         
             
@@ -136,7 +136,16 @@
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -179,31 +188,40 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -257,14 +275,21 @@ app.post('/block', (req,res,next) =&gt; {
     const body = req.body;
 &nbsp;
     if(!body || Object.keys(body).length === 0){
-        return res.status(422).json({"erro": "corpo da requisição não pode ser vazio"})
+        return res.status(422).json({"message": "corpo da requisição não pode ser vazio"})
     }
 &nbsp;
-    if (typeof body.data !== 'string' || typeof body.previous_hash !== 'string') <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(422).json({"erro": "corpo da requisição está incompleto ou contém campos inválidos"})</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+    if (typeof body.data != 'string' || typeof body.previousHash != 'string' ) {
+        return res.status(422).json({"message": "corpo da requisição está incompleto ou contém campos inválidos"})
+    }
 &nbsp;
-    const newBlock = new Block(body.index<span class="branch-0 cbranch-no" title="branch not covered" > ?? blockchain.nextIndex,</span> body.previous_hash, body.data);
+    const newBlock = new Block(body.index<span class="branch-0 cbranch-no" title="branch not covered" > ?? blockchain.nextIndex,</span> body.previousHash, body.data);
+&nbsp;
+    /**
+     * Bloco deve ser minerado antes de ser adicionado. 
+     * 
+     *     newBlock.mine(blockchain.getDifficult(), 'uga gua');
+     */
+&nbsp;
 &nbsp;
     const addValidation = blockchain.addBlock(newBlock);
 &nbsp;
@@ -278,6 +303,8 @@ app.post('/block', (req,res,next) =&gt; {
 if(process.argv.includes("--run"))
 <span class="branch-0 cbranch-no" title="branch not covered" >    app.listen(PORT, () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        console.log(`Rodando na porta ${PORT}`)</span>
+<span class="cstat-no" title="statement not covered" >        console.log('genesis:')</span>
+<span class="cstat-no" title="statement not covered" >        console.log(blockchain.getLasBlock())</span>
 <span class="cstat-no" title="statement not covered" >    })</span>
 &nbsp;
 export{
@@ -289,7 +316,7 @@ export{
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-18T16:37:48.145Z
+                at 2026-04-20T00:04:38.826Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -16,9 +16,9 @@ export default class Block {
         this.timestamp = Date.now();
         this.previousHash = previousHash;
         this.data = data;
-        this.hash = this.getHash();
         this.nonce = nonce || 0;
         this.miner = miner || "";
+        this.hash = this.getHash();
     }
 
     getHash(): string {
@@ -40,7 +40,6 @@ export default class Block {
 
                 this.hash = this.getHash();
             } while(!this.hash.startsWith(prefix))
-
     }
 
 
@@ -50,7 +49,7 @@ export default class Block {
         if (this.previousHash !== blockchainPreviousHash)  return new Validation(false, "invalid previous hash");
         if (previousIndex !== this.index - 1)  return new Validation(false, "invalid previous index");;
         if (!this.data)  return new Validation(false, "invalid data");
-        if (this.hash.length === 0) return new Validation(false, "invalid previous hash");
+        if (this.hash.length === 0) return new Validation(false, "this hash cannot be null");
         /*
         Precisamos chamar getHash() novamente e comparar com o hash atual.
         Se for adulterado o bloco, getHash() retornará um hash diferente do atual.

@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>75/75</span>
+                <span class='fraction'>76/76</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>75/75</span>
+                <span class='fraction'>76/76</span>
             </div>
         
             
@@ -137,7 +137,8 @@
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -153,10 +154,15 @@
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
@@ -186,10 +192,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -212,14 +214,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import Block from "./block";
-import Validation from "./validation";
 import BlockInfo from "./blockInfo";
+import Validation from "./validation";
 &nbsp;
 export default class Blockchain {
     blocks: Block[];
     nextIndex: number = 0;
     static readonly DIFFICULT = 5;
-    static readonly MAX_DIFFICULT = 62; //tamanho do hash é 64. Se for 64 zeros, não teria dados para armazenar
+    static readonly MAX_DIFFICULT = 63; //SE FOR 64 zeros, não há informações no bloco
 &nbsp;
     constructor() {
         this.blocks = [new Block(this.nextIndex, "", "Genesis Block")];
@@ -234,6 +236,11 @@ export default class Blockchain {
         const lastBlock = this.getLasBlock();
         const currentDifficult = this.getDifficult();
 &nbsp;
+/*         console.log("Blockchain last block:")
+        console.log(lastBlock)
+        console.log("Genesis .getHash(): ")
+        console.log(lastBlock.getHash())
+        console.log(lastBlock.getHash()) */
        if (!(block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult).success)) return block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult);
 &nbsp;
         this.blocks.push(block);
@@ -257,32 +264,28 @@ export default class Blockchain {
             const currentBlock = this.blocks[i]!;
             const previousBlock = this.blocks[i-1]!;
             
-            const validation = currentBlock.isValid(previousBlock.getHash(), previousBlock.index);
+            const validation = currentBlock.isValid(previousBlock.getHash(), previousBlock.index, this.getDifficult());
             if (!validation.success) return new Validation(false, `Validation failed: ${validation}`);
         }
         
         return new Validation(true);
     }
 &nbsp;
-    getFeePerTx() : number {
-        return 1; // da menor unidade da blockchain. Ex.: 1 satoshi, 1 wuei (etherum)
+    //unidade mínima da moeda. ex.: satoshi, uei, etc
+    getFeePerTx(): number {
+        return 1;
     }
 &nbsp;
     getNextBlockInfo() : BlockInfo {
-        const data = new Date().toString();
-        const difficult = this.getDifficult();
-        const previousHash = this.getLasBlock().hash;
         const index = this.blocks.length;
+        const previousHash = this.getLasBlock().hash;
+        const difficult = this.getDifficult();
+        const maxDifficult = Blockchain.MAX_DIFFICULT;
         const feePerTx = this.getFeePerTx();
-        const maxDifficult = Blockchain.MAX_DIFFICULT
-&nbsp;
+        const data = new Date().toString();
+        
         return {
-             data,
-             difficult,
-             previousHash,
-             index,
-             feePerTx,
-             maxDifficult
+            index, previousHash, difficult, maxDifficult, feePerTx, data
         } as BlockInfo
     }
 }</pre></td></tr></table></pre>
@@ -292,7 +295,7 @@ export default class Blockchain {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-04-18T16:37:48.145Z
+                at 2026-04-20T00:04:38.826Z
             </div>
         <script src="../prettify.js"></script>
         <script>

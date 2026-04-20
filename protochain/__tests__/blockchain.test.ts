@@ -87,9 +87,9 @@ describe("Blockchain", () => {
         expect(blockchain.getBlock(hash)?.index).toBe(0)
     })
 
-    test("Should get next block info", () => {
+    test('Should get next block info', () => {
         const blockchain = new Blockchain();
-        const INFO = blockchain.getNextBlockInfo();
-        expect(INFO).not.toBeNull();
+        const nextInfo = blockchain.getNextBlockInfo();
+        expect(nextInfo.index).toBe(1)
     })
 })
