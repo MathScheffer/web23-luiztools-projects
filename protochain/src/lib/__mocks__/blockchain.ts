@@ -33,19 +33,19 @@ export default class Blockchain {
         return new Validation(true);
     }
 
-        getFeePerTx() : number {
-            return 1; // da menor unidade da blockchain. Ex.: 1 satoshi, 1 wuei (etherum)
-        }
-    
-        getNextBlockInfo() : BlockInfo {
-    
-            return {
-                 data: new Date().toString(),
-                 difficult: 0,
-                 previousHash: this.getLasBlock().hash,
-                 index: 1,
-                 feePerTx: this.getFeePerTx(),
-                 maxDifficult: 62
-            } as BlockInfo
-        }
+    getFeePerTx() : number {
+        return 1; // da menor unidade da blockchain. Ex.: 1 satoshi, 1 wuei (etherum)
+    }
+
+    getNextBlockInfo() : BlockInfo {
+
+        return {
+                data: new Date().toString(),
+                difficult: 0,
+                previousHash: this.getLasBlock().hash,
+                index: 1,
+                feePerTx: this.getFeePerTx(),
+                maxDifficult: 62
+        } as BlockInfo
+    }
 };
