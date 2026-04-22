@@ -53,7 +53,9 @@ app.post('/block', (req,res,next) => {
         return res.status(422).json({"message": "corpo da requisição está incompleto ou contém campos inválidos"})
     }
 
-    const newBlock = new Block(body.index ?? blockchain.nextIndex, body.previousHash, body.data);
+    const newBlock = new Block(body.index, body.previousHash, body.data, body.nonce, body.miner);
+    newBlock.timestamp = body.timestamp;
+    newBlock.hash = body.hash;
 
     /**
      * Bloco deve ser minerado antes de ser adicionado. 

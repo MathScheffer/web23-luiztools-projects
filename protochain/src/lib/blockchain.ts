@@ -26,7 +26,7 @@ export default class Blockchain {
         console.log("Genesis .getHash(): ")
         console.log(lastBlock.getHash())
         console.log(lastBlock.getHash()) */
-       if (!(block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult).success)) return block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult);
+       if (!(block.isValid(lastBlock.hash, lastBlock.index, currentDifficult).success)) return block.isValid(lastBlock.getHash(), lastBlock.index, currentDifficult);
 
         this.blocks.push(block);
         this.nextIndex++;

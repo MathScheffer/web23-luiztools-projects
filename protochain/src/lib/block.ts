@@ -1,5 +1,6 @@
 import sha256 from "crypto-js/sha256";
 import Validation from "./validation";
+import BlockInfo from "./blockInfo";
 
 export default class Block {
     index: number;
@@ -34,6 +35,7 @@ export default class Block {
             this.miner = miner;
 
             const prefix = new Array(difficult + 1).join("0");
+            console.log("PREFIXO CRIADO PARA MINERAR:", prefix)
 
             do {
                 this.nonce++;
@@ -58,12 +60,17 @@ export default class Block {
 
         //Configura o prefixo, ou seja: quantos zeros À esquerda os hashs da blockchain deverão ter
         const prefix = new Array(difficult + 1).join("0");
-        if(!this.hash.startsWith(prefix)) return new Validation(false, "Mined incorrectly or not mined.");
+        console.log('PREFIXO DE VALIDAÇÃO:', prefix)
+        if(!this.hash.startsWith(prefix)) return new Validation(false, `Not mined or mined wrong. The prefix ${prefix} was expected.`);
 
         if(this.timestamp < 1)  return new Validation(false, "invalid timestamp"); 
         
         
 
         return new Validation();
+    }
+
+    static fromBlockInfo(blockInfo: BlockInfo){
+        return new Block(blockInfo.index, blockInfo.previousHash, blockInfo.data);
     }
 }
