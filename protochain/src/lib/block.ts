@@ -19,6 +19,7 @@ export default class Block {
         this.data = data;
         this.nonce = nonce || 0;
         this.miner = miner || "";
+        //TODO: SETAR O HASH COMO OPCIONAL
         this.hash = this.getHash();
     }
 
@@ -70,7 +71,7 @@ export default class Block {
         return new Validation();
     }
 
-    static fromBlockInfo(blockInfo: BlockInfo){
+    static fromBlockInfo(blockInfo: BlockInfo): Block{
         return new Block(blockInfo.index, blockInfo.previousHash, blockInfo.data);
     }
 }

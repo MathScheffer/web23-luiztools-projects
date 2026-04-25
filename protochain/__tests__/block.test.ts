@@ -1,5 +1,6 @@
 import Block from "../src/lib/block";
 import {beforeAll, describe, expect, test} from "@jest/globals";
+import BlockInfo from "../src/lib/blockInfo";
 
 describe("Block", () => {
 
@@ -77,4 +78,17 @@ describe("Block", () => {
         block.data = "teste ihu";
         expect(block.isValid(genesis.hash, genesis.index, exampleDificult).success).toBeFalsy();
     })
+
+    test("Should return a block entity with fromBlock function", () => {
+        const myBlock = Block.fromBlockInfo({    "index": 1,
+            previousHash: "abc",
+            data: "testung block"} as BlockInfo);
+
+        expect(myBlock).toBeInstanceOf(Block);
+        expect(myBlock.previousHash).toBe("abc");
+        expect(myBlock.data).toBe("testung block");
+        expect(myBlock.index).toBe(1);
+
+    })
+
 });

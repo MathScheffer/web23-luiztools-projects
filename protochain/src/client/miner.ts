@@ -1,11 +1,14 @@
 import axios from "axios";
 import BlockInfo from "../lib/blockInfo";
 import Block from "../lib/block";
+import dotenv from 'dotenv';
+dotenv.config();
 
-const BLOCKCHAIN_SERVER = 'http://localhost:3000'
+const BLOCKCHAIN_SERVER = process.env.BLOCKCHAIN_SERVER;
+
 const minerWaller = {
     "privateKey": "1234",
-    "publicKey": "scheffer martins public key"
+    "publicKey": `${process.env.MINER_WALLET}`
 }
 var totalMined = 0;
 

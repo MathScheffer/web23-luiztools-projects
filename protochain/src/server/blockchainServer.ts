@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express'
 import morgan from 'morgan';
 import Blockchain from '../lib/blockchain';
 import Block from '../lib/block';
 
-const PORT: number = 3000;
+const PORT: string = `${process.env.BLOCKCHAIN_PORT || 3000}`;
 
 const app = express();
 
@@ -72,13 +75,16 @@ app.post('/block', (req,res,next) => {
 
     res.status(201).json(blockchain.getLasBlock())
 })
+    /*c8 ignore start*/
 
 if(process.argv.includes("--run"))
+
     app.listen(PORT, () => {
         console.log(`Rodando na porta ${PORT}`)
         console.log('genesis:')
         console.log(blockchain.getLasBlock())
     })
+    /*c8 ignore end*/
 
 export{
     app
